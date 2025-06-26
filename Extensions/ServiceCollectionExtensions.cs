@@ -12,8 +12,7 @@ namespace Tienda.MicroServicios.Autor.Api.Extensions
         public static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers().AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Nuevo>());
-            services.AddDbContext<ContextoAutor>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ContextoAutor>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
