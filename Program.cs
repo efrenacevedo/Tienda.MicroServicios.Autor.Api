@@ -8,15 +8,19 @@ var allowedOrigins = new[] { "https://vistalibrosautores-production.up.railway.a
 builder.Services.AddControllers();
 
 // Configurar CORS con política nombrada
-builder.Services.AddCors(options =>
+app.Use(async (context, next) =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins(allowedOrigins)
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+    context.Response.Headers.Append("Access-Control-Allow-Methods", "*");
+    context.Response.Headers.Append("Access-Control-Allow-Headers", "*");
+
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.StatusCode = 200;
+        return;
+    }
+
+    await next();
 });
 
 builder.Services.AddOpenApi();

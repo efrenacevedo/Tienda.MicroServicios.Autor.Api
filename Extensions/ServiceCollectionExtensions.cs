@@ -17,9 +17,7 @@ namespace Tienda.MicroServicios.Autor.Api.Extensions
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
+                    builder.AllowAnyOrigin();
                 });
             });
             services.AddMediatR(typeof(Nuevo.Manejador).Assembly);
