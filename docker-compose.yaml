@@ -1,0 +1,21 @@
+﻿services:
+  sqlserverautor:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserverAutor
+    environment:
+      SA_PASSWORD: "Strongpa$w0rd!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1434:1434"
+  
+
+  autor-micro-service:
+    build: .
+    ports:
+      - "6000:6000"
+    environment:
+      - ASPNETCORE_URLS=http://+:6000
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserverAutor;Database=bdEfren;user=sa;password=Strongpa$w0rd!;TrustServerCertificate=true;
+    depends_on:
+      - sqlserverautor 
