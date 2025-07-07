@@ -2,10 +2,13 @@
 using Tienda.MicroServicios.Autor.Api.Extensions;
 using MediatR;
 using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Registrar MediatR
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
-// 👉 CORS policy
+// Nombre de la política CORS
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options =>
@@ -29,15 +32,21 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Middleware
+// Middleware para mostrar errores detallados en desarrollo
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseHttpsRedirection();
 
-// 👉 Aquí activas la política CORS
+// Activar política CORS ANTES de autorización
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
-// Mapear controladores
 app.MapControllers();
 
 app.Run();
