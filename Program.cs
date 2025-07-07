@@ -33,21 +33,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-    context.Response.Headers.Append("Access-Control-Allow-Methods", "*");
-    context.Response.Headers.Append("Access-Control-Allow-Headers", "*");
-
-    if (context.Request.Method == "OPTIONS")
-    {
-        context.Response.StatusCode = 200;
-        return;
-    }
-
-    await next();
-});
-
 // Usar la política CORS
 app.UseCors("AllowFrontend");
 
