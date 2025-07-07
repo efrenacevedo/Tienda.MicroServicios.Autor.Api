@@ -1,9 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tienda.MicroServicios.Autor.Api.Extensions;
 using MediatR;
 using System.Reflection;
+using Tienda.MicroServicios.Autor.Api.Percistence; // Asegúrate que este sea el namespace correcto para ContextoLibreria
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Registrar DbContext con cadena de conexión desde configuración
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<ContextoAutor>(options =>
+    options.UseNpgsql(connectionString)); // Cambia UseSqlServer si usas otra BD
 
 // Registrar MediatR
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
