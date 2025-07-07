@@ -1,11 +1,13 @@
-using Tienda.MicroServicios.Autor.Api.Extensions;
+ï»¿using Tienda.MicroServicios.Autor.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Definir orígenes permitidos (pon aquí el dominio real de tu frontend)
+
 var allowedOrigins = new[] {
     "https://vista-libros-autores-xge2-efrenacevedos-projects.vercel.app"
 };
+
+builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
 {
@@ -17,12 +19,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-builder.Services.AddControllers();
-
-// Configurar CORS con política nombrada
-
-
 builder.Services.AddOpenApi();
 builder.Services.AddCustomServices(builder.Configuration);
 
@@ -33,7 +29,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// Usar la política CORS
+// âœ… Aplica la polÃ­tica de CORS antes de cualquier middleware
 app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
