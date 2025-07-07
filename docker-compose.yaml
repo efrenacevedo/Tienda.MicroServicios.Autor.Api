@@ -1,21 +1,26 @@
 ﻿services:
-  sqlserverautor:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserverAutor
+  postgres:
+    image: postgres:16
+    container_name: postgres
     environment:
-      SA_PASSWORD: "Strongpa$w0rd!"
-      ACCEPT_EULA: "Y"
+      POSTGRES_DB: bdEfren
+      POSTGRES_USER: efren
+      POSTGRES_PASSWORD: Strongpa$$w0rd!
     ports:
-      - "1434:1434"
-  
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
-  autor-micro-service:
+  uttt-micro-service:
     build: .
     ports:
-      - "6000:6000"
+      - "5000:5000"
     environment:
-      - ASPNETCORE_URLS=http://+:6000
+      - ASPNETCORE_URLS=http://+:5000
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserverAutor;Database=bdEfren;user=sa;password=Strongpa$w0rd!;TrustServerCertificate=true;
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=bdEfren;Username=efren;Password=Strongpa$$w0rd!;
     depends_on:
-      - sqlserverautor 
+      - postgres
+
+volumes:
+  postgres_data:
