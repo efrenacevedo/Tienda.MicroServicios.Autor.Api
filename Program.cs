@@ -1,6 +1,9 @@
-﻿using Tienda.MicroServicios.Autor.Api.Extensions;
-
+﻿using Microsoft.EntityFrameworkCore;
+using Tienda.MicroServicios.Autor.Api.Extensions;
+using MediatR;
+using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 // 👉 CORS policy
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
