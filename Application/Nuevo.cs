@@ -34,7 +34,7 @@ namespace Tienda.MicroServicios.Autor.Api.Application
                 {
                     Nombre = request.Nombre,
                     Apellido = request.Apellido,
-                    FechaNacimiento = request.FechaNacimiento,
+                    FechaNacimiento = DateTime.SpecifyKind(request.FechaNacimiento, DateTimeKind.Utc),
                     AutorLibroGuid = Convert.ToString(Guid.NewGuid()) // Genera un GUID único para el autor
                 };
                 _contexto.AutorLibros.Add(autorLibro);
