@@ -34,6 +34,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
 
 // Middleware para mostrar errores detallados en desarrollo
 if (app.Environment.IsDevelopment())
@@ -46,7 +47,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Activar política CORS ANTES de autorización
-app.UseCors(MyAllowSpecificOrigins);
+
 
 app.UseAuthorization();
 
