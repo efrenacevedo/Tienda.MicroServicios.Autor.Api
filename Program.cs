@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MediatR;
 using System.Reflection;
+using AutoMapper;
 using Tienda.MicroServicios.Autor.Api.Percistence; // Asegúrate que este sea el namespace correcto para ContextoLibreria
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,10 @@ builder.Services.AddDbContext<ContextoAutor>(options =>
 
 // Registrar MediatR
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+//Registrar IMapper
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 
 // Nombre de la política CORS
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
