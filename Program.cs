@@ -39,8 +39,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-app.UseRouting();
 app.UseCors(MyAllowSpecificOrigins);
+app.UseRouting();
+
 
 // Middleware para mostrar errores detallados en desarrollo
 if (app.Environment.IsDevelopment())
