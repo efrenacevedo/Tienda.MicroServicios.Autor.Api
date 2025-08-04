@@ -12,8 +12,8 @@ using Tienda.MicroServicios.Autor.Api.Percistence;
 namespace Tienda.MicroServicios.Autor.Api.Migrations
 {
     [DbContext(typeof(ContextoAutor))]
-    [Migration("20250626215933_postv1")]
-    partial class postv1
+    [Migration("20250804212630_postgres")]
+    partial class postgres
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
