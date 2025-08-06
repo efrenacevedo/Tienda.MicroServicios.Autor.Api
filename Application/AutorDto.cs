@@ -9,5 +9,6 @@ namespace Tienda.MicroServicios.Autor.Api.Application
         public string Apellido { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public string AutorLibroGuid { get; set; }
+        public string Fuente { get; set; }
     }
 }

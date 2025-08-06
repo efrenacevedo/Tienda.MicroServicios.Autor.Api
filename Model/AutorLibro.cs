@@ -8,5 +8,6 @@
         public DateTime FechaNacimiento { get; set; }
         public ICollection<GradoAcademico> GradosAcademicos { get; set; }
         public string AutorLibroGuid { get; set; }
+
     }
 }

@@ -2,95 +2,97 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Tienda.MicroServicios.Autor.Api.Percistence;
+using Tienda.MicroServicios.Autor.Api.Application;
 
 #nullable disable
 
 namespace Tienda.MicroServicios.Autor.Api.Migrations
 {
-    [DbContext(typeof(ContextoAutor))]
-    [Migration("20250626215933_postv1")]
-    partial class postv1
+    [DbContext(typeof(WriteDBContext))]
+    [Migration("20250805152910_V1")]
+    partial class V1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.6")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "8.0.13")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("Tienda.MicroServicios.Autor.Api.Model.AutorLibro", b =>
                 {
-                    b.Property<int>("AutorLibroId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AutorLibroId"));
+                    b.Property<string>("AutorLibroGuid")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<string>("AutorLibroGuid")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("AutorLibroId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("FechaNacimiento")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.HasKey("AutorLibroId");
+                    b.HasKey("AutorLibroGuid");
 
-                    b.ToTable("AutorLibros");
+                    b.ToTable("AutorLibro", (string)null);
                 });
 
             modelBuilder.Entity("Tienda.MicroServicios.Autor.Api.Model.GradoAcademico", b =>
                 {
                     b.Property<int>("GradoAcademicoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GradoAcademicoId"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("GradoAcademicoId"));
+
+                    b.Property<string>("AutorLibroGuid")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("AutorLibroId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("CentroAcademico")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("FechaGrado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("GradoAcademicoGuid")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("GradoAcademicoId");
 
-                    b.HasIndex("AutorLibroId");
+                    b.HasIndex("AutorLibroGuid");
 
-                    b.ToTable("GradosAcademicos");
+                    b.ToTable("GradoAcademico");
                 });
 
             modelBuilder.Entity("Tienda.MicroServicios.Autor.Api.Model.GradoAcademico", b =>
                 {
                     b.HasOne("Tienda.MicroServicios.Autor.Api.Model.AutorLibro", "AutorLibro")
                         .WithMany("GradosAcademicos")
-                        .HasForeignKey("AutorLibroId")
+                        .HasForeignKey("AutorLibroGuid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

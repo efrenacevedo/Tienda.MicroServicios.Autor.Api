@@ -13,9 +13,9 @@ namespace Tienda.MicroServicios.Autor.Api.Application
         }
         public class Manejador : IRequestHandler<AutorUnico, AutorDto>
         {
-            private readonly ContextoAutor _context;
+            private readonly ReadDBContext _context;
             private readonly IMapper _mapper;
-            public Manejador(ContextoAutor context, IMapper mapper)
+            public Manejador(ReadDBContext context, IMapper mapper)
             {
                 this._context = context;
                 this._mapper = mapper;

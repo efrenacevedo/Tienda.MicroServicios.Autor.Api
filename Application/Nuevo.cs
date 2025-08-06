@@ -23,8 +23,8 @@ namespace Tienda.MicroServicios.Autor.Api.Application
         }
         public class Manejador : IRequestHandler<Ejecuta>
         {
-            private readonly ContextoAutor _contexto;
-            public Manejador(ContextoAutor contexto)
+            private readonly WriteDBContext _contexto;
+            public Manejador(WriteDBContext contexto)
             {
                 _contexto = contexto;
             }

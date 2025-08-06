@@ -1,19 +1,26 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Tienda.MicroServicios.Autor.Api.Application;
 
 namespace Tienda.MicroServicios.Autor.Api.Controllers
 {
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AutoresController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly WriteDBContext _writeContext;
+        private readonly ReadDBContext _readContext;
 
-        public AutoresController(IMediator mediator)
+        public AutoresController(IMediator mediator, WriteDBContext writeContext, ReadDBContext readContext)
         {
             _mediator = mediator;
+            _writeContext = writeContext;
+            _readContext = readContext;
         }
 
         // GET: api/autores
@@ -22,6 +29,7 @@ namespace Tienda.MicroServicios.Autor.Api.Controllers
         {
             var result = await _mediator.Send(new Consulta.Ejecuta());
             return Ok(result);
+
         }
 
         // GET: api/autores/{guid}
@@ -47,6 +55,9 @@ namespace Tienda.MicroServicios.Autor.Api.Controllers
             var result = await _mediator.Send(data);
             return Ok(result);
         }
+
+        
+
 
         //// PUT: api/autores/{guid}
         //[HttpPut("{guid}")]
